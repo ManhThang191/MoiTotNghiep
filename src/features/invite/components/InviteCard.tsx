@@ -1,6 +1,6 @@
 "use client"
 
-import { MapIcon, MapPin } from "lucide-react"
+import { MapIcon, MapPin, PhoneIcon } from "lucide-react"
 import { EVENT } from "../constants"
 import CountdownTimer from "./CountdownTimer"
 import { useState } from "react"
@@ -80,10 +80,14 @@ export default function InviteCard({ guestName }: InviteCardProps) {
           <CountdownTimer />
         </div>
 
-        <span style={{ fontWeight: 200 }}>Tại Hội Trường B (Lầu 5 tòa B)</span>
+        <span style={{ fontWeight: 200, fontSize: '0.875rem' }}>Hội Trường B (Lầu 5 tòa B) / Khu Tự Học </span>
+        <span className="flex items-center justify-center gap-1">
+          <PhoneIcon size={17} color="#946728" />
+          <span> 0 383 758 002</span>
+        </span>
         <button className="font-vietnam flex justify-center text-sm text-[#946728] hover:scale-105 cursor-pointer transition-transform" 
           onClick={() => setShowMap(!showMap)}>
-            <MapIcon/>
+            <MapIcon className="text-[#946728] mr-2" /> {' '}
           Xem bản đồ trường
         </button>
 
@@ -95,9 +99,9 @@ export default function InviteCard({ guestName }: InviteCardProps) {
           href={EVENT.mapUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-start gap-2 hover:opacity-75 transition-opacity"
+          className="flex items-start justify-center gap-2 hover:opacity-75 transition-opacity"
         >
-          <MapPin size={14} className="mt-0.5 shrink-0 text-[#FFB347]" />
+          <MapPin size={14} className="mt-0.5 shrink-0 text-[#b37d31]" />
           <span className="font-vietnam text-sm text-[#7A5C45] text-left">{EVENT.venue}</span>
         </a>
 
