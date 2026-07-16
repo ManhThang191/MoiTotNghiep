@@ -4,6 +4,7 @@ import { useRef } from "react"
 import InviteCard from "./components/InviteCard"
 import InviteCardExport from "./components/InviteCardExport"
 import DownloadButtons from "./components/DownloadButtons"
+import FloatingHearts from "@/components/FloatingHearts"
 
 interface InvitePageViewProps {
   guestName: string
@@ -14,9 +15,9 @@ export default function InvitePageView({ guestName, slug }: InvitePageViewProps)
   const exportRef = useRef<HTMLDivElement>(null)
 
   return (
-    <main className="min-h-screen bg-[#FFEBD3] flex flex-col items-center justify-start py-8 px-4 gap-5">
+    <div className="min-h-screen bg-[#FFEBD3] z-50 flex flex-col items-center justify-start py-8 px-4 gap-5">
+      <FloatingHearts />
       <InviteCard guestName={guestName} />
-
       <div className="flex gap-3 w-full max-w-sm mx-auto">
         <DownloadButtons exportRef={exportRef} slug={slug} />
       </div>
@@ -29,6 +30,7 @@ export default function InvitePageView({ guestName, slug }: InvitePageViewProps)
       >
         <InviteCardExport ref={exportRef} guestName={guestName} />
       </div>
-    </main>
+    </div>
+    
   )
 }

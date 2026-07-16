@@ -4,6 +4,8 @@ import Image from "next/image"
 import { useHomeForm } from "./useHomeForm"
 import { EVENT } from "../invite/constants"
 import LoadingCircle from "@/components/LoadingCircle"
+import FloatingHearts from "@/components/FloatingHearts"
+import { ArrowRightIcon } from "lucide-react"
 
 export default function HomeForm() {
   const { name, error, loading, setName, onSubmit } = useHomeForm()
@@ -31,13 +33,14 @@ export default function HomeForm() {
       <div className="relative z-10 flex flex-col items-center gap-8 px-4 py-10 w-full max-w-sm">
         {/* Hero text */}
         <div className="flex flex-col items-center gap-2 text-center">
-          <p className="text-xs uppercase tracking-widest text-[#7A5C45] font-medium">
+          {/* <p className="text-xs uppercase tracking-widest text-[#7A5C45] font-medium">
             {EVENT.school}
-          </p>
-          <h1 className="text-3xl font-bold text-[#3D2B1F] leading-tight md:text-4xl">
+          </p> */}
+          <Image src="/images/Logo-HCMUE---ENG-2.png" alt="logo" width={300} height={200} />
+          <h1 className="text-3xl font-bold text-[#8b6348] leading-tight md:text-4xl">
             Lễ Tốt Nghiệp
           </h1>
-          <p className="text-base text-[#7A5C45] font-medium">{EVENT.hostName}</p>
+          <p className=" text-[#4a2a12]  font-bold text-3xl ">{EVENT.hostName}</p>
           <p className="text-sm text-[#B08060]">{EVENT.displayDatetime}</p>
         </div>
 
@@ -63,7 +66,7 @@ export default function HomeForm() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Ví dụ: Hiếu thứ hai"
+                placeholder="Họ và tên của bạn"
                 autoComplete="name"
                 className="w-full rounded-md border border-[#EDD5B8] bg-white px-3 py-2.5 text-sm text-[#3D2B1F] placeholder:text-[#B08060] outline-none transition-colors focus:border-[#FFB347] focus:ring-2 focus:ring-[#FFB347]/30"
                 aria-describedby={error ? "guest-name-error" : undefined}
@@ -82,11 +85,12 @@ export default function HomeForm() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={!name.trim() || name.length < 6 || loading}
               className="flex w-full items-center justify-center gap-2 rounded-md bg-[#FFB347] px-4 py-3 text-sm font-semibold text-[#3D2B1F] transition-colors hover:bg-[#FFA020] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB347] focus-visible:ring-offset-2"
             >
               {loading && <LoadingCircle size="sm" />}
               Xem thiệp mời
+              <ArrowRightIcon/>
             </button>
           </form>
         </div>

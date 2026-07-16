@@ -1,14 +1,20 @@
 "use client"
 
-import { MapPin } from "lucide-react"
+import { MapIcon, MapPin } from "lucide-react"
 import { EVENT } from "../constants"
 import CountdownTimer from "./CountdownTimer"
+import { useState } from "react"
+import MapPopup from "@/components/MapPopup"
+
 
 interface InviteCardProps {
   guestName: string
 }
 
 export default function InviteCard({ guestName }: InviteCardProps) {
+
+  const [showMap, setShowMap] = useState(false);
+
   return (
     <div className="w-full max-w-sm mx-auto rounded-xl overflow-hidden shadow-md bg-[#FFF8F2]">
 
@@ -56,7 +62,9 @@ export default function InviteCard({ guestName }: InviteCardProps) {
         <div className="text-center">
           <p className="font-playfair italic text-sm text-[#7A5C45] mb-1">Xin trân trọng kính mời</p>
           <p className="font-playfair font-bold text-3xl text-[#3D2B1F] leading-tight border-b-2 border-[#FFB347] pb-1">
-            {guestName}
+            Bạn <span className=" text-[#af681d] font-bold ">{guestName}</span>
+              
+              
           </p>
           <p className="font-vietnam text-sm text-[#7A5C45] mt-1">đến tham dự Lễ Tốt Nghiệp</p>
         </div>
@@ -72,6 +80,16 @@ export default function InviteCard({ guestName }: InviteCardProps) {
           <CountdownTimer />
         </div>
 
+        <span style={{ fontWeight: 200 }}>Tại Hội Trường B (Lầu 5 tòa B)</span>
+        <button className="font-vietnam flex justify-center text-sm text-[#946728] hover:scale-105 cursor-pointer transition-transform" 
+          onClick={() => setShowMap(!showMap)}>
+            <MapIcon/>
+          Xem bản đồ trường
+        </button>
+
+          <MapPopup open={showMap} onClose={() => setShowMap(false)} />
+        
+
         {/* Address — always visible, clickable */}
         <a
           href={EVENT.mapUrl}
@@ -83,6 +101,7 @@ export default function InviteCard({ guestName }: InviteCardProps) {
           <span className="font-vietnam text-sm text-[#7A5C45] text-left">{EVENT.venue}</span>
         </a>
 
+        
       </div>
     </div>
   )

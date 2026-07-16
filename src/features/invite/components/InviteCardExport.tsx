@@ -112,6 +112,7 @@ const InviteCardExport = forwardRef<HTMLDivElement, InviteCardExportProps>(
             </p>
             <p style={{ fontFamily: "var(--font-be-vietnam), sans-serif", fontSize: 15, color: "#7A5C45", margin: 0 }}>
               đến tham dự Lễ Tốt Nghiệp
+              
             </p>
           </div>
 

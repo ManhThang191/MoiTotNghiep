@@ -1,18 +1,18 @@
 # Project Context — huda-graduations
 
 ## Overview
-A graduation invitation website for **Đặng Quốc Hưng**, Bachelor of Information Technology, Ho Chi Minh City University of Education (HCMUE).
+A graduation invitation website for **Nguyễn Mạnh Thắng**, Bachelor of Information Technology, Ho Chi Minh City University of Education (HCMUE).
 
 Users receive a personalized link, view an online invitation card with a live countdown and map, then download a PNG or PDF version of the card.
 
 ## Event Details (hardcoded constants)
 ```ts
 export const EVENT = {
-  hostName: "Đặng Quốc Hưng",
+  hostName: "Nguyễn Mạnh Thắng",
   degree: "Cử nhân Công Nghệ Thông Tin",
   school: "Trường Đại học Sư Phạm TP.HCM",
   datetime: new Date("2026-07-24T10:00:00+07:00"),
-  displayDatetime: "10:00 SA, Thứ Sáu, 24/07/2025",
+  displayDatetime: "10:30 SA, Thứ Sáu, 24/07/2025",
   venue: "280 An Dương Vương, Phường Chợ Quán, Quận 5, TP.HCM",
   mapUrl: "https://maps.app.goo.gl/zqhAjhnyCN76uwaK9",
   bgImage: "/images/hcmue.webp",

@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Playfair_Display, Be_Vietnam_Pro } from "next/font/google"
 import { Toaster } from "sonner"
 import "./globals.css"
+import FloatingHearts from "@/components/FloatingHearts"
 
 const playfair = Playfair_Display({
   subsets: ["vietnamese"],
@@ -17,9 +18,9 @@ const beVietnam = Be_Vietnam_Pro({
 })
 
 export const metadata: Metadata = {
-  title: "Thiệp Mời Tốt Nghiệp — Đặng Quốc Hưng",
+  title: "Thiệp Mời Tốt Nghiệp — Nguyễn Mạnh Thắng",
   description:
-    "Thiệp mời lễ tốt nghiệp cử nhân Công Nghệ Thông Tin của Đặng Quốc Hưng tại Trường Đại học Sư Phạm TP.HCM.",
+    "Thiệp mời lễ tốt nghiệp cử nhân Công Nghệ Thông Tin của Nguyễn Mạnh Thắng tại Trường Đại học Sư Phạm TP.HCM.",
 }
 
 export default function RootLayout({
@@ -30,6 +31,8 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`${playfair.variable} ${beVietnam.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
+          <FloatingHearts/>
+        
         {children}
         <Toaster
           position="top-center"

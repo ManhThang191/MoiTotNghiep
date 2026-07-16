@@ -9,6 +9,8 @@ interface HomeFormState {
   loading: boolean
 }
 
+
+
 export function useHomeForm() {
   const router = useRouter()
   const [state, setState] = useState<HomeFormState>({
@@ -22,10 +24,10 @@ export function useHomeForm() {
   }
 
   const validate = (): boolean => {
-    if (state.name.trim().length < 2) {
+    if (state.name.trim().length < 6) {
       setState((prev) => ({
         ...prev,
-        error: "Vui lòng nhập họ và tên ít nhất 2 ký tự.",
+        error: "Vui lòng nhập họ và tên ít nhất 6 ký tự.",
       }))
       return false
     }

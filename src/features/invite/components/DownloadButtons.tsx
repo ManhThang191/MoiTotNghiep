@@ -22,7 +22,7 @@ export default function DownloadButtons({ exportRef, slug }: DownloadButtonsProp
         aria-label="Tải thiệp mời dạng ảnh PNG"
       >
         {isExporting ? <LoadingCircle size="sm" /> : <Download size={16} />}
-        Tải ảnh (PNG)
+        Tải Thiệp (PNG)
       </button>
 
       <button
@@ -32,7 +32,7 @@ export default function DownloadButtons({ exportRef, slug }: DownloadButtonsProp
         aria-label="Tải thiệp mời dạng PDF"
       >
         {isExporting ? <LoadingCircle size="sm" /> : <FileDown size={16} />}
-        Tải PDF
+        Tải Thiệp (PDF)
       </button>
     </div>
   )
