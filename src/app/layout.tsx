@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="vi" className={`${playfair.variable} ${beVietnam.variable} h-full antialiased`}>
+    <html lang="vi" className={`${playfair.variable} data-scroll-behavior="smooth" ${beVietnam.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
           <FloatingHearts/>
         
