@@ -289,8 +289,8 @@ export default function InviteCard({ guestName }: InviteCardProps) {
           className="text-center"
         >
           {EVENT.thanks}
-          <VisitorCounter />
         </span>
+        <VisitorCounter />
       </div>
     </div>
   )
