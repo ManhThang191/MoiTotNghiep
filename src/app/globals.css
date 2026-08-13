@@ -1,8 +1,8 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #FFEBD3;
-  --foreground: #3D2B1F;
+  --background: #ffebd3;
+  --foreground: #3d2b1f;
 }
 
 @theme inline {
@@ -13,9 +13,9 @@
   --font-vietnam: var(--font-be-vietnam), sans-serif;
 }
 
-:webkit-scrollbar {
+/* ::webkit-scrollbar {
   display: none;
-}
+} */
 
 body {
   background: var(--background);
@@ -90,7 +90,7 @@ body {
 @keyframes floatingFlower {
   0% {
     transform: translateY(0) rotate(0deg);
-    opacity: .4;
+    opacity: 0.4;
   }
 
   50% {
@@ -109,11 +109,11 @@ body {
   animation-iteration-count: infinite;
 }
 
-
 @keyframes blink {
-  0%,100% {
-    opacity: .2;
-    transform: scale(.7);
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.7);
   }
 
   50% {
