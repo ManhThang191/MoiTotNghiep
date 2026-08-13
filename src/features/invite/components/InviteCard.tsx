@@ -7,6 +7,7 @@ import { useState, useRef, useEffect } from 'react'
 import MapPopup from '@/components/MapPopup'
 import BgPicScence from './BgPicScence'
 import { PicMGArray } from '@/data/PicMGArray'
+import VisitorCounter from '@/components/VisitorCounter'
 
 interface InviteCardProps {
   guestName: string
@@ -288,6 +289,7 @@ export default function InviteCard({ guestName }: InviteCardProps) {
           className="text-center"
         >
           {EVENT.thanks}
+          <VisitorCounter />
         </span>
       </div>
     </div>

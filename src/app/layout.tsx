@@ -1,47 +1,50 @@
-import type { Metadata } from "next"
-import { Playfair_Display, Be_Vietnam_Pro } from "next/font/google"
-import { Toaster } from "sonner"
-import "./globals.css"
-import FloatingHearts from "@/components/FloatingHearts"
+import type { Metadata } from 'next'
+import { Playfair_Display, Be_Vietnam_Pro } from 'next/font/google'
+import { Toaster } from 'sonner'
+import './globals.css'
+import FloatingHearts from '@/components/FloatingHearts'
 
 const playfair = Playfair_Display({
-  subsets: ["vietnamese"],
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-playfair",
+  subsets: ['vietnamese'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-playfair'
 })
 
 const beVietnam = Be_Vietnam_Pro({
-  subsets: ["vietnamese"],
-  weight: ["400", "500", "600"],
-  variable: "--font-be-vietnam",
+  subsets: ['vietnamese'],
+  weight: ['400', '500', '600'],
+  variable: '--font-be-vietnam'
 })
 
 export const metadata: Metadata = {
-  title: "Thiệp Mời Tốt Nghiệp — Nguyễn Mạnh Thắng",
+  title: 'Thiệp Mời Tốt Nghiệp — Trần Thị Mai Giang',
   description:
-    "Thiệp mời lễ tốt nghiệp cử nhân Công Nghệ Thông Tin của Nguyễn Mạnh Thắng tại Trường Đại học Sư Phạm TP.HCM.",
+    'Thiệp mời lễ tốt nghiệp cử nhân Quản Trị Kinh Doanh của Mai Giang tại trường Đại Học Quốc Tế Miền Đông'
 }
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="vi" className={`${playfair.variable} data-scroll-behavior="smooth" ${beVietnam.variable} h-full antialiased`}>
+    <html
+      lang="vi"
+      className={`${playfair.variable} data-scroll-behavior="smooth" ${beVietnam.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col">
-          <FloatingHearts/>
-        
+        <FloatingHearts />
+
         {children}
         <Toaster
           position="top-center"
           toastOptions={{
             classNames: {
-              success: "!bg-[#D4EDDA] !text-[#1D6B35] !border-[#A8D5B5]",
-              error: "!bg-[#FFE0DC] !text-[#8B2318] !border-[#F5B8B2]",
-              warning: "!bg-[#FFF3CD] !text-[#7A5A00] !border-[#F0D98A]",
-            },
+              success: '!bg-[#D4EDDA] !text-[#1D6B35] !border-[#A8D5B5]',
+              error: '!bg-[#FFE0DC] !text-[#8B2318] !border-[#F5B8B2]',
+              warning: '!bg-[#FFF3CD] !text-[#7A5A00] !border-[#F0D98A]'
+            }
           }}
         />
       </body>
