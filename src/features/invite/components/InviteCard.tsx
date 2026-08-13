@@ -26,134 +26,62 @@ export default function InviteCard({ guestName }: InviteCardProps) {
     setIsMuted(!isMuted)
   }
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % PicMGArray.length)
-    }, 4000)
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set())
+  const [isFirstImageLoaded, setIsFirstImageLoaded] = useState(false)
 
-    return () => clearInterval(interval)
+  useEffect(() => {
+    const firstImage = new Image()
+    firstImage.src = PicMGArray[0].url
+
+    firstImage.onload = () => {
+      setIsFirstImageLoaded(true)
+      setLoadedImages((prev) => {
+        const next = new Set(prev)
+        next.add(PicMGArray[0].url)
+        return next
+      })
+    }
   }, [])
 
-  // return (
-  //   <div className="w-full max-w-sm mx-auto rounded-xl overflow-hidden shadow-md bg-[#FFF8F2]">
-  //     {/* TOP: image only, fixed height */}
-  //     <div
-  //       className="relative w-full"
-  //       style={{ height: 520, overflow: 'hidden' }}
-  //     >
-  //       {/* <div
-  //         className="absolute inset-0"
-  //         style={{
-  //           backgroundImage: `url('${EVENT.bgImage}')`,
-  //           backgroundSize: "cover",
-  //           backgroundPosition: "center 20%",
-  //         }}
-  //       ></div> */}
+  useEffect(() => {
+    if (!isFirstImageLoaded) return
 
-  //       {PicMGArray.map((pic, index) => (
-  //         <div
-  //           key={pic.url}
-  //           className="absolute inset-0"
-  //           style={{
-  //             backgroundImage: `url('${pic.url}')`,
-  //             backgroundSize: 'cover',
-  //             backgroundPosition: 'center 20%',
-  //             opacity: index === currentIndex ? 1 : 0,
-  //             transition: 'opacity 1.5s ease-in-out'
-  //           }}
-  //         />
-  //       ))}
-  //       {/* dark overlay so text is readable */}
-  //       <div className="absolute inset-0 bg-black/20" />
-  //       {/* fade bottom of image into cream */}
-  //       <div
-  //         className="absolute bottom-0 left-0 w-full"
-  //         style={{
-  //           height: 56,
-  //           background: 'linear-gradient(to bottom, transparent, #FFF8F2)'
-  //         }}
-  //       />
-  //       {/* school name pill — top center */}
-  //       <div className="absolute top-3 left-0 right-0 flex justify-center">
-  //         <span
-  //           className="font-vietnam text-white text-xs px-4 py-1 rounded-full"
-  //           style={{ background: 'rgba(0,0,0,0.32)', letterSpacing: '0.12em' }}
-  //         >
-  //           {EVENT.school}
-  //         </span>
-  //       </div>
-  //     </div>
+    const nextIndex = (currentIndex + 1) % PicMGArray.length
+    const nextUrl = PicMGArray[nextIndex].url
 
-  //     {/* BOTTOM: all text content, normal flow, solid cream */}
-  //     <div className="bg-[#FFF8F2] px-6 pt-2 pb-6 flex flex-col items-center gap-3">
-  //       {/* Host info */}
-  //       <div className="text-center">
-  //         <p className="font-vietnam text-xs text-[#B08060]">{EVENT.degree}</p>
-  //         <p className="font-playfair font-bold text-xl text-[#3D2B1F] leading-snug">
-  //           {EVENT.hostName}
-  //         </p>
-  //       </div>
+    // Nếu ảnh kế tiếp chưa load thì preload
+    if (!loadedImages.has(nextUrl)) {
+      const img = new Image()
 
-  //       {/* Amber divider */}
-  //       <div className="w-10 h-0.5 bg-[#FFB347]" />
+      img.src = nextUrl
 
-  //       {/* Invite + guest name */}
-  //       <div className="text-center">
-  //         <p className="font-playfair italic text-sm text-[#7A5C45] mb-1">
-  //           Xin trân trọng kính mời
-  //         </p>
-  //         <p className="font-playfair font-bold text-3xl text-[#3D2B1F] leading-tight border-b-2 border-[#FFB347] pb-1">
-  //           Bạn <span className=" text-[#af681d] font-bold ">{guestName}</span>
-  //         </p>
-  //         <p className="font-vietnam text-sm text-[#7A5C45] mt-1">
-  //           đến tham dự Lễ Tốt Nghiệp
-  //         </p>
-  //       </div>
+      img.onload = () => {
+        setLoadedImages((prev) => {
+          const next = new Set(prev)
+          next.add(nextUrl)
+          return next
+        })
+      }
 
-  //       {/* Date/time — prominent */}
-  //       <p className="font-vietnam font-semibold text-sm text-[#3D2B1F] text-center">
-  //         {EVENT.displayDatetime}
-  //       </p>
+      return
+    }
 
-  //       {/* Countdown — 2 boxes only */}
-  //       <div>
-  //         <p className="font-vietnam text-xs text-[#B08060] text-center mb-2">
-  //           Thời gian còn lại
-  //         </p>
-  //         <CountdownTimer />
-  //       </div>
+    // Ảnh kế tiếp đã sẵn sàng → chờ 4 giây rồi chuyển
+    const timeout = setTimeout(() => {
+      setCurrentIndex(nextIndex)
+    }, 2500)
 
-  //       <span style={{ fontWeight: 200, fontSize: '0.875rem' }}>
-  //         Hội Trường B (Lầu 5 tòa B) / Khu Tự Học{' '}
-  //       </span>
-  //       <span className="flex items-center justify-center gap-1">
-  //         <PhoneIcon size={17} color="#946728" />
-  //         <span> {EVENT.phoneNumber}</span>
-  //       </span>
-  //       <button
-  //         className="font-vietnam flex justify-center text-sm text-[#946728] hover:scale-105 cursor-pointer transition-transform"
-  //         onClick={() => setShowMap(!showMap)}
-  //       >
-  //         <MapIcon className="text-[#946728] mr-2" /> Xem bản đồ trường
-  //       </button>
+    return () => clearTimeout(timeout)
+  }, [currentIndex, isFirstImageLoaded, loadedImages])
 
-  //       <MapPopup open={showMap} onClose={() => setShowMap(false)} />
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentIndex((prev) => (prev + 1) % PicMGArray.length)
+  //   }, 4000)
 
-  //       {/* Address — always visible, clickable */}
-  //       <a
-  //         href={EVENT.mapUrl}
-  //         target="_blank"
-  //         rel="noopener noreferrer"
-  //         className="flex items-start justify-center gap-2 hover:opacity-75 transition-opacity"
-  //       >
-  //         <MapPin size={14} className="mt-0.5 shrink-0 text-[#b37d31]" />
-  //         <span className="font-vietnam text-sm text-[#7A5C45] text-left">
-  //           {EVENT.venue}
-  //         </span>
-  //       </a>
-  //     </div>
-  //   </div>
-  // )
+  //   return () => clearInterval(interval)
+  // }, [])
+
   return (
     <div
       className="
@@ -174,23 +102,23 @@ export default function InviteCard({ guestName }: InviteCardProps) {
         <button
           onClick={toggleMute}
           className="
-    fixed
-    cursor-pointer
-    top-5
-    right-5
-    z-50
-    w-11
-    h-11
-    rounded-full
-    bg-[#FFF8F2]/90
-    shadow-md
-    flex
-    items-center
-    justify-center
-    text-[#946728]
-    hover:scale-110
-    transition
-  "
+          fixed
+          cursor-pointer
+          top-5
+          right-5
+          z-50
+          w-11
+          h-11
+          rounded-full
+          bg-[#FFF8F2]/90
+          shadow-md
+          flex
+          items-center
+          justify-center
+          text-[#946728]
+          hover:scale-110
+          transition
+        "
         >
           {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
         </button>
@@ -204,19 +132,27 @@ export default function InviteCard({ guestName }: InviteCardProps) {
       />
       {/* ================= IMAGE ================= */}
       <div className="relative w-full lg:w-1/2 shrink-0 h-[420px] lg:h-[520px]">
-        {PicMGArray.map((pic, index) => (
-          <div
-            key={pic.url}
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url('${pic.url}')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center 50%',
-              opacity: index === currentIndex ? 1 : 0,
-              transition: 'opacity 1.5s ease-in-out'
-            }}
-          />
-        ))}
+        {PicMGArray.map((pic, index) => {
+          const isLoaded = loadedImages.has(pic.url)
+
+          if (!isLoaded) return null
+
+          return (
+            <div
+              key={pic.url}
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `url('${pic.url}')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center 50%',
+
+                opacity: index === currentIndex ? 1 : 0,
+
+                transition: 'opacity 1.5s ease-in-out'
+              }}
+            />
+          )
+        })}
 
         {/* dark overlay */}
         <div className="absolute inset-0 bg-black/20" />
@@ -232,19 +168,6 @@ export default function InviteCard({ guestName }: InviteCardProps) {
     lg:bg-linear-to-r
   "
         />
-
-        {/* school */}
-        {/* <div className="absolute top-3 left-0 right-0 flex justify-center">
-          <span
-            className="font-vietnam text-white text-xs px-4 py-1 rounded-full"
-            style={{
-              background: 'rgba(0,0,0,0.32)',
-              letterSpacing: '0.12em'
-            }}
-          >
-            {EVENT.school}
-          </span>
-        </div> */}
       </div>
 
       {/* ================= CONTENT ================= */}
@@ -307,21 +230,6 @@ export default function InviteCard({ guestName }: InviteCardProps) {
         </div>
 
         {/* Location */}
-        {/* <span
-          style={{
-            fontWeight: 200,
-            fontSize: '0.875rem'
-          }}
-          className="text-center"
-        >
-          Hội Trường B (Lầu 5 tòa B) / Khu Tự Học
-        </span> */}
-
-        {/* Phone */}
-        {/* <span className="flex items-center justify-center gap-1">
-          <PhoneIcon size={17} color="#946728" />
-          <span>{EVENT.phoneNumber}</span>
-        </span> */}
 
         <a
           href={`tel:${EVENT.phoneNumber}`}
