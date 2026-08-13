@@ -1,6 +1,7 @@
 import { Redis } from '@upstash/redis'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+import { randomUUID } from 'crypto'
 
 const redis = Redis.fromEnv()
 
@@ -8,63 +9,77 @@ export async function POST(request: Request) {
   try {
     const { guestName } = await request.json()
 
-    if (!guestName) {
+    if (!guestName || typeof guestName !== 'string') {
       return NextResponse.json(
         { error: 'guestName is required' },
         { status: 400 }
       )
     }
 
+    const name = guestName.trim()
+
+    if (!name) {
+      return NextResponse.json({ error: 'guestName is empty' }, { status: 400 })
+    }
+
     const cookieStore = await cookies()
 
-    // Tạo key riêng cho khách
-    const guestKey = `guest:${guestName}`
+    // =========================
+    // LẤY DEVICE ID
+    // =========================
 
-    const existingGuest = await redis.get<{
-      guestName: string
-      firstVisit: string
-      lastVisit: string
-      visitCount: number
-    }>(guestKey)
+    let visitorId = cookieStore.get('visitor_id')?.value
 
-    const now = new Date().toISOString()
+    let isNewDevice = false
 
-    if (!existingGuest) {
-      const guest = {
-        guestName,
-        firstVisit: now,
-        lastVisit: now,
-        visitCount: 1
-      }
+    // Chưa có cookie → tạo device ID
+    if (!visitorId) {
+      visitorId = randomUUID()
+      isNewDevice = true
+    }
 
-      await redis.set(guestKey, guest)
+    const visitorKey = `visitor:${visitorId}`
 
-      cookieStore.set(`visited_${guestName}`, '1', {
+    // =========================
+    // LẤY DANH SÁCH TÊN
+    // =========================
+
+    const existingNames = (await redis.get<string[]>(visitorKey)) ?? []
+
+    // Không lưu trùng tên
+    if (!existingNames.includes(name)) {
+      existingNames.push(name)
+    }
+
+    // Lưu lại
+    await redis.set(visitorKey, existingNames)
+
+    // =========================
+    // LƯU COOKIE
+    // =========================
+
+    if (isNewDevice) {
+      cookieStore.set('visitor_id', visitorId, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         path: '/',
-        maxAge: 60 * 60 * 24 * 30
-      })
-
-      return NextResponse.json({
-        success: true,
-        guest
+        maxAge: 60 * 60 * 24 * 365
       })
     }
 
-    // Cập nhật lượt xem
-    const updatedGuest = {
-      ...existingGuest,
-      lastVisit: now,
-      visitCount: existingGuest.visitCount + 1
-    }
+    // =========================
+    // ĐẾM DEVICE
+    // =========================
 
-    await redis.set(guestKey, updatedGuest)
+    const visitorKeys = await redis.keys('visitor:*')
 
     return NextResponse.json({
       success: true,
-      guest: updatedGuest
+      visitorId,
+      names: existingNames,
+      totalDevices: visitorKeys.length,
+      isNewDevice
     })
   } catch (error) {
     console.error('Visitor error:', error)
@@ -77,28 +92,32 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  const cookieStore = await cookies()
+  try {
+    const visitorKeys = await redis.keys('visitor:*')
 
-  const visited = cookieStore.get('invite_visited')
+    const visitors = []
 
-  let count = await redis.get<number>('invite:visitors')
+    for (const key of visitorKeys) {
+      const names = await redis.get<string[]>(key)
 
-  // Người này chưa từng truy cập
-  if (!visited) {
-    count = await redis.incr('invite:visitors')
+      visitors.push({
+        visitorId: key.replace('visitor:', ''),
+        names: names ?? []
+      })
+    }
 
-    cookieStore.set('invite_visited', '1', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 30 // 30 ngày
+    return NextResponse.json({
+      totalDevices: visitorKeys.length,
+      visitors
     })
-  }
+  } catch (error) {
+    console.error('Get visitors error:', error)
 
-  return NextResponse.json({
-    count: count ?? 0
-  })
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
 }
 
 export const dynamic = 'force-dynamic'

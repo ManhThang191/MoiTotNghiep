@@ -3,37 +3,36 @@
 import { useEffect, useState } from 'react'
 
 export default function VisitorCounter({ guestName }: { guestName: string }) {
-  const [count, setCount] = useState<number | null>(null)
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
-    const getVisitorCount = async () => {
+    const getVisitors = async () => {
       try {
-        const response = await fetch('/api/visitor', {
-          method: 'GET',
-          cache: 'no-store'
-        })
+        const response = await fetch('/api/visitor')
 
-        if (!response.ok) return
+        if (!response.ok) {
+          throw new Error('Failed to get visitors')
+        }
 
         const data = await response.json()
 
-        setCount(data.count)
+        setTotal(data.totalDevices)
       } catch (error) {
-        console.error('Visitor counter error:', error)
+        console.error('Get visitor error:', error)
       }
     }
 
-    getVisitorCount()
+    getVisitors()
   }, [])
 
-  if (count === null) {
+  if (total === null) {
     return null
   }
 
   return guestName === 'MaiGiang111' || guestName === '1234' ? (
     <div className="flex items-center justify-center gap-1 text-sm text-[#7A5C45]">
       <span>👀</span>
-      <span>{count} người ghé thăm</span>
+      <span>{total} người ghé thăm</span>
     </div>
   ) : (
     <></>
