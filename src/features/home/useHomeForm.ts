@@ -24,10 +24,10 @@ export function useHomeForm() {
   }
 
   const validate = (): boolean => {
-    if (state.name.trim().length < 6) {
+    if (state.name.trim().length < 2) {
       setState((prev) => ({
         ...prev,
-        error: "Vui lòng nhập họ và tên ít nhất 6 ký tự.",
+        error: "Vui lòng nhập họ và tên ít nhất 2 ký tự.",
       }))
       return false
     }
