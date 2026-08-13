@@ -154,7 +154,7 @@ export default function InviteCard({ guestName }: InviteCardProps) {
         preload="auto"
       />
       {/* ================= IMAGE ================= */}
-      <div className="relative w-full lg:w-1/2 shrink-0 h-[420px] lg:h-[520px]">
+      <div className="relative w-full lg:w-1/2 shrink-0 h-105 lg:h-131.25">
         {PicMGArray.map((pic, index) => {
           const isLoaded = loadedImages.has(pic.url)
 
@@ -332,6 +332,7 @@ export default function InviteCard({ guestName }: InviteCardProps) {
         >
           {EVENT.thanks}
         </span>
+
         <VisitorCounter guestName={guestName} />
       </div>
     </div>
