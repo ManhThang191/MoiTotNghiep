@@ -127,3 +127,44 @@ body {
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
+
+@keyframes phone-ring {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  10% {
+    transform: rotate(15deg);
+  }
+
+  20% {
+    transform: rotate(-15deg);
+  }
+
+  30% {
+    transform: rotate(12deg);
+  }
+
+  40% {
+    transform: rotate(-12deg);
+  }
+
+  50% {
+    transform: rotate(8deg);
+  }
+
+  60% {
+    transform: rotate(-8deg);
+  }
+
+  70%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.phone-ring {
+  animation: phone-ring 1.5s ease-in-out infinite;
+  transform-origin: center;
+}

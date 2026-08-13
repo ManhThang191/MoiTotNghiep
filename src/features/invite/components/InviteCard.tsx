@@ -256,10 +256,30 @@ export default function InviteCard({ guestName }: InviteCardProps) {
 
         <a
           href={`tel:${EVENT.phoneNumber}`}
-          className="flex items-center justify-center gap-1"
+          className="
+    font-vietnam
+    cursor-pointer
+    flex
+    items-center
+    justify-center
+    gap-2
+    px-4
+    py-2
+    rounded-full
+    bg-[#FFF3E8]
+    border
+    border-[#E7C7A1]
+    text-[#946728]
+    hover:bg-[#FBE7D3]
+    hover:scale-105
+    transition-all
+    duration-200
+    shadow-sm
+  "
         >
-          <PhoneIcon size={20} color="#946728" />
-          <span className="text-xl">{EVENT.phoneNumber}</span>
+          <PhoneIcon size={20} color="#946728" className="phone-ring" />
+
+          <span className="text-md">{EVENT.phoneNumber}</span>
         </a>
 
         {/* Map button */}
@@ -296,9 +316,9 @@ export default function InviteCard({ guestName }: InviteCardProps) {
           transition-opacity
         "
         >
-          <MapPin size={14} className="mt-0.5 shrink-0 text-[#b37d31]" />
+          <MapPin size={20} className="mt-0.5 shrink-0 text-[#b37d31]" />
 
-          <span className="font-vietnam text-sm text-[#7A5C45] text-left">
+          <span className="font-vietnam text-md text-[#7A5C45] text-left">
             {EVENT.venue}
           </span>
         </a>
