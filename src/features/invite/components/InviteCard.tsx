@@ -287,8 +287,7 @@ export default function InviteCard({ guestName }: InviteCardProps) {
           }}
           className="text-center"
         >
-          🎓 Mình chính thức tốt nghiệp rồi! Thân mời bạn đến tham dự lễ tốt
-          nghiệp và cùng mình lưu lại một ngày thật đáng nhớ nhé! ❤️
+          {EVENT.thanks}
         </span>
       </div>
     </div>

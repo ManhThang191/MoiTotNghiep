@@ -20,5 +20,7 @@ export const EVENT = {
   mapUrl:
     'https://www.google.com/maps/place/Trung+t%C3%A2m+H%E1%BB%99i+ngh%E1%BB%8B+%26+Tri%E1%BB%83n+l%C3%A3m+T%E1%BB%89nh+B%C3%ACnh+D%C6%B0%C6%A1ng/@11.0541129,106.6836664,17z/data=!4m6!3m5!1s0x3174cfd677c789d1:0x2c2177908d83fb67!8m2!3d11.0542077!4d106.6822502!16s%2Fg%2F11cjttbc6w?entry=ttu&g_ep=EgoyMDI2MDgxMC4wIKXMDSoASAFQAw%3D%3D',
   bgImage: '/images/_EIU.webp',
-  phoneNumber: '0359 539 650'
+  phoneNumber: '0359 539 650',
+  thanks:
+    'Với tất cả sự trân trọng và yêu thương, em Giang rất mong được đón tiếp anh/chị/bạn đến chung vui và ghi dấu những khoảnh khắc ý nghĩa trong ngày lễ tốt nghiệp của mình ❤️❤️'
 }
