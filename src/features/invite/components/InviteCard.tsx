@@ -31,6 +31,28 @@ export default function InviteCard({ guestName }: InviteCardProps) {
   const [isFirstImageLoaded, setIsFirstImageLoaded] = useState(false)
 
   useEffect(() => {
+    if (!guestName) return
+
+    const trackVisitor = async () => {
+      try {
+        await fetch('/api/visitor', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            guestName
+          })
+        })
+      } catch (error) {
+        console.error('Tracking visitor error:', error)
+      }
+    }
+
+    trackVisitor()
+  }, [guestName])
+
+  useEffect(() => {
     const firstImage = new Image()
     firstImage.src = PicMGArray[0].url
 
@@ -290,7 +312,7 @@ export default function InviteCard({ guestName }: InviteCardProps) {
         >
           {EVENT.thanks}
         </span>
-        <VisitorCounter />
+        <VisitorCounter guestName={guestName} />
       </div>
     </div>
   )

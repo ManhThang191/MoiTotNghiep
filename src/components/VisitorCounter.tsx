@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-export default function VisitorCounter() {
+export default function VisitorCounter({ guestName }: { guestName: string }) {
   const [count, setCount] = useState<number | null>(null)
 
   useEffect(() => {
@@ -30,10 +30,12 @@ export default function VisitorCounter() {
     return null
   }
 
-  return (
+  return guestName === 'MaiGiang111' || guestName === '1234' ? (
     <div className="flex items-center justify-center gap-1 text-sm text-[#7A5C45]">
       <span>👀</span>
       <span>{count} người ghé thăm</span>
     </div>
+  ) : (
+    <></>
   )
 }
