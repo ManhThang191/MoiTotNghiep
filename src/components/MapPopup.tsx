@@ -1,17 +1,14 @@
-"use client";
+'use client'
 
-import Image from "next/image";
+import Image from 'next/image'
 
 interface MapPopupProps {
-  open: boolean;
-  onClose: () => void;
+  open: boolean
+  onClose: () => void
 }
 
-export default function MapPopup({
-  open,
-  onClose,
-}: MapPopupProps) {
-  if (!open) return null;
+export default function MapPopup({ open, onClose }: MapPopupProps) {
+  if (!open) return null
 
   return (
     <div
@@ -39,5 +36,5 @@ export default function MapPopup({
         />
       </div>
     </div>
-  );
+  )
 }
