@@ -39,7 +39,7 @@ export default function HomeForm() {
             {EVENT.school}
           </p> */}
           <Image
-            src="/images/logoEIU.png"
+            src="/images/logoEIU.webp"
             alt="logo"
             className="pb-8"
             width={300}
