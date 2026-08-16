@@ -15,7 +15,7 @@ export const EVENT = {
   degree: 'Cử nhân Quản Trị Kinh Doanh',
   school: 'Trường Đại Học Quốc Tế Miền Đông',
   datetime: new Date('2026-08-22T11:30:00+07:00'),
-  displayDatetime: 'Thứ 7, 11:30 AM, 22/08/2026',
+  displayDatetime: 'Thứ 7, 10:00 AM, 22/08/2026',
   venue: 'Trung tâm Triển lãm Quốc tế WTC EXPO - Hall B',
   mapUrl: 'https://maps.app.goo.gl/GyhWBaAHdiBBdm397',
   bgImage: '/images/_EIU.webp',
